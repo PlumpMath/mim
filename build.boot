@@ -3,10 +3,10 @@
 
 (set-env! :resource-paths #{"resources" "src"}
           :source-paths   #{"test"}
-          :dependencies   '[[org.clojure/clojure "RELEASE"]
+          :dependencies   '[[org.clojure/clojure "1.7.0"]
                             [org.clojure/core.match "0.3.0-alpha4"]
                             [hiccup "1.0.5"]
-                            [adzerk/boot-test "RELEASE" :scope "test"]])
+                            [adzerk/boot-test "1.1.1" :scope "test"]])
 
 (task-options!
  pom {:project     project
@@ -21,5 +21,3 @@
   "Build and install the project locally."
   []
   (comp (pom) (jar) (install)))
-
-(require '[adzerk.boot-test :refer [test]])
