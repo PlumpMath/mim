@@ -3,6 +3,15 @@
   (:require [clojure.test :refer :all]
             [mim.core :as m :refer [html]]))
 
+(deftest dynamic-maps
+  (testing "We can parse forms where the attr map is dynamic"
+    (let [m {:class "stuff"}]
+      (is (= (html [:div m [:p "Stuff"]])
+              "<div class=\"stuff\"><p>Stuff</p></div>"))
+      (is (= (html [:div (update m :class (partial str "more "))
+                    [:p "Stuff"]])
+             "<div class=\"more stuff\"><p>Stuff</p></div>")))))
+
 (deftest tag-names
   (testing "We can use hiccup as a backend"
     (is (= (html [:div.foo (str "bar" "baz")])

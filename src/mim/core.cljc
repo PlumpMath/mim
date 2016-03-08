@@ -40,6 +40,10 @@
                   [[t (attrs :guard map?)]] {:tag t :attrs attrs :xs []}
                   [[t (attrs :guard map?) & xs]] {:tag t :attrs attrs
                                                   :xs (mapv parse xs)}
+                  [[t (attrs :guard symbol?) & xs]] {:tag t :attrs attrs
+                                                     :xs (mapv parse xs)}
+                  [[t (attrs :guard list?) & xs]] {:tag t :attrs attrs
+                                                   :xs (mapv parse xs)}
                   [[t & xs]] {:tag t :attrs {}
                               :xs (mapv parse xs)}))))
 
