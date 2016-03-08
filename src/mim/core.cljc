@@ -1,5 +1,6 @@
 (ns mim.core
-  (:require [clojure.core.match :refer [match]]))
+  (:require [clojure.core.match :refer [match]]
+            [sablono.compiler :as s]))
 
 (defprotocol Parse
   (parse [form]))
@@ -51,8 +52,24 @@
     (f node)
     (f (update node :xs (partial mapv (partial walk-ast f))))))
 
+(defn node->form [n]
+  (case (:type n)
+    :static (:value n)
+    :dynamic (:value n)
+    :form (into [(:tag n) (:attrs n)] (:xs n))))
+
 ;; ======================================================================
 ;; Emit
 
 (defprotocol Emit
   (emit [c form]))
+
+;; Sablono emitter
+
+(defrecord SablonoEmitter []
+  Emit
+  (emit [c node]
+    (s/compile-html (walk-ast node->form node))))
+
+(defmacro html [content]
+  (emit (SablonoEmitter.) (parse content)))
