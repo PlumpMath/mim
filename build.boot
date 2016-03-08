@@ -3,9 +3,11 @@
 
 (set-env! :resource-paths #{"resources" "src"}
           :source-paths   #{"test"}
-          :dependencies   '[[org.clojure/clojure "1.7.0"]
+          :dependencies   '[[org.clojure/clojure "1.8.0" :scope "provided"]
+                            [org.clojure/clojurescript "1.7.228"]
                             [org.clojure/core.match "0.3.0-alpha4"]
                             [hiccup "1.0.5"]
+                            [sablono "0.6.2"]
                             [adzerk/boot-test "1.1.1" :scope "test"]])
 
 (task-options!
