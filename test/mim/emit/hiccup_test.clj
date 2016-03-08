@@ -1,7 +1,6 @@
-(ns mim.core-test
-  (:import [mim.core StringEmitter])
+(ns mim.emit.hiccup-test
   (:require [clojure.test :refer :all]
-            [mim.core :as m :refer [html]]))
+            [mim.emit.hiccup :refer [html]]))
 
 (deftest dynamic-maps
   (testing "We can parse forms where the attr map is dynamic"

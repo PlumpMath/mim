@@ -1,7 +1,5 @@
 (ns mim.core
-  (:require [clojure.core.match :refer [match]]
-            [hiccup.compiler :as h]
-            [hiccup.util :as hu]))
+  (:require [clojure.core.match :refer [match]]))
 
 (defprotocol Parse
   (parse [form]))
@@ -11,7 +9,7 @@
 
 (def branch? (complement leaf?))
 
-;; Need to parse special sugar
+;; Need to parse special sugar CSS for id and class, ex: div#id.class
 ;; from hiccup.compiler
 
 (def ^{:doc "Regular expression that parses a CSS-style id and class from an element name."
@@ -58,32 +56,3 @@
 
 (defprotocol Emit
   (emit [c form]))
-
-(comment
-  (let [tag-attrs (tag->attrs (:tag node))
-        tag (name (:tag node
-                   ))]
-    (str "<" tag ">"
-         (apply str (map (partial emit c) (:xs node)))
-         "</" tag ">")))
-
-(defrecord StringEmitter []
-  Emit
-  (emit [c node]
-    (letfn [(node->hiccup [n]
-              (case (:type n)
-                :static (:value n)
-                :dynamic (:value n)
-                :form (into [(:tag n) (:attrs n)] (:xs n))))]
-      (h/compile-html (walk-ast node->hiccup node)))))
-
-(defmacro html [content]
-  (emit (StringEmitter.) (parse content)))
-
-(defn foo
-  "I don't do a whole lot."
-  [x]
-  (= (parse [:div]) {:type :form
-                     :tag :div
-                     :xs []})
-  (println x "Hello, World!"))
