@@ -62,3 +62,23 @@
 
 (defprotocol Emit
   (emit [c form]))
+
+;; ======================================================================
+;; Isomorphic Components
+
+(comment
+  (defview counter [props :- Empty c :- Int]
+    [:div {}
+     [:p "The count is " c]])
+
+  (defc counter
+    (handle [s :inc _]
+            (update s :c inc))
+    (handle [s :dec _]
+            (update s :c dec))
+    (init-state [] 0)
+    (render [props :- Empty state :- {:c Int}]
+            [:div {}
+             [:p "The count is " c]
+             [:button {:on-click (raise! :inc nil)} "+1"]
+             [:button {:on-click (raise! :dec nil)} "-1"]])))
