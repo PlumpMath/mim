@@ -1,6 +1,5 @@
 (ns mim.core
-  (:require [clojure.core.match :refer [match]]
-            [sablono.compiler :as s]))
+  (:require [clojure.core.match :refer [match]]))
 
 (defprotocol Parse
   (parse [form]))
@@ -63,13 +62,3 @@
 
 (defprotocol Emit
   (emit [c form]))
-
-;; Sablono emitter
-
-(defrecord SablonoEmitter []
-  Emit
-  (emit [c node]
-    (s/compile-html (walk-ast node->form node))))
-
-(defmacro html [content]
-  (emit (SablonoEmitter.) (parse content)))
