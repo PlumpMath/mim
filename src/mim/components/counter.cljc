@@ -1,6 +1,6 @@
 (ns mim.components.counter
   (:require [om.core :as om]
-            #?(:clj [mim.emit.sablono :as s :refer-macros [html]]
+            #?(:clj [mim.emit.hiccup :refer [html]]
                :cljs [mim.emit.sablono :as s :refer-macros [html]])))
 
 (def init-state {:c 0})

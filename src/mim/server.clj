@@ -4,15 +4,22 @@
             [ring.util.response :as response]
             [compojure.core :refer :all]
             [compojure.route :as route]
-            [compojure.handler :as handler]))
+            [compojure.handler :as handler]
+            [net.cgrand.enlive-html :as enlive :refer [deftemplate]]
+            [mim.components.counter :as c]))
 
-(defroutes index
-  (GET "/" [] (response/file-response "resources/public/index.html"))
+
+(deftemplate index-template "public/index.html"
+  []
+  [:#container] (enlive/html-content (c/counter c/init-state)))
+
+(defroutes main-routes
+  (GET "/" [] (index-template))
   (route/resources "/")
   (route/not-found "<h1>Page not found</h1>"))
 
 (def app-handler
-  (-> index
+  (-> main-routes
       handler/site))
 
 (defn start-jetty [handler port]

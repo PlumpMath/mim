@@ -20,7 +20,8 @@
             [reloaded.repl "0.2.0"]
             [com.stuartsierra/component "0.2.3"]
             [ring "1.3.2"]
-            [compojure "1.4.0"]])
+            [compojure "1.4.0"]
+            [enlive "1.1.6"]])
 
 (task-options!
  pom {:project     project
