@@ -9,12 +9,18 @@
             [org.clojure/core.match "0.3.0-alpha4"]
             [hiccup "1.0.5"]
             [sablono "0.6.2"]
+            ;; Dev
+            [adzerk/boot-test "1.1.1" :scope "test"]
+            ;; Example Frontend
             [adzerk/boot-cljs          "1.7.170-3"  :scope "test"]
             [adzerk/boot-cljs-repl     "0.2.0"      :scope "test"]
             [adzerk/boot-reload        "0.4.1"      :scope "test"]
-            [pandeiro/boot-http        "0.6.3"      :scope "test"]
             [org.omcljs/om "1.0.0-alpha30"]
-            [adzerk/boot-test "1.1.1" :scope "test"]])
+            ;; Example Backend
+            [reloaded.repl "0.2.0"]
+            [com.stuartsierra/component "0.2.3"]
+            [ring "1.3.2"]
+            [compojure "1.4.0"]])
 
 (task-options!
  pom {:project     project
@@ -29,7 +35,8 @@
  '[adzerk.boot-cljs      :refer [cljs]]
  '[adzerk.boot-cljs-repl :refer [cljs-repl start-repl]]
  '[adzerk.boot-reload    :refer [reload]]
- '[pandeiro.boot-http    :refer [serve]])
+ '[reloaded.repl         :refer [go reset start stop system]]
+ '[mim.boot         :refer [start-app]])
 
 (load-data-readers!)
 
@@ -39,9 +46,9 @@
   (comp (pom) (jar) (install)))
 
 (deftask run []
-  (comp (serve)
-        (watch)
+  (comp (watch)
         (cljs-repl)
         (reload)
         (speak)
-        (cljs)))
+        (cljs)
+        (start-app :port 3000)))
