@@ -1,6 +1,7 @@
 (ns mim.emit.sablono
   (:require [mim.core :as mim]
-            [sablono.compiler :as s]))
+            [sablono.compiler :as s]
+            [sablono.interpreter]))
 
 (defrecord SablonoEmitter []
   mim/Emit

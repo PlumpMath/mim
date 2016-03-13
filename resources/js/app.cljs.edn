@@ -1,0 +1,3 @@
+{:require  [mim.example]
+ :init-fns [mim.example/init]
+ :compiler-options {:asset-path "js/app.out"}}
